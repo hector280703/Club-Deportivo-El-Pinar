@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext.jsx';
 import toast from 'react-hot-toast';
 import { Mail, Lock, LogIn } from 'lucide-react';
 

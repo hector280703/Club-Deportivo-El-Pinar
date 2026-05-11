@@ -1,4 +1,4 @@
-import Sidebar from './Sidebar';
+import Sidebar from './Sidebar.jsx';
 
 export default function Layout({ children }) {
   return (

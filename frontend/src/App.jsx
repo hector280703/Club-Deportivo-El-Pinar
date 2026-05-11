@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { AuthProvider } from './context/AuthContext';
-import ProtectedRoute from './components/ProtectedRoute';
-import Layout from './components/Layout';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import Socios from './pages/Socios';
-import Pagos from './pages/Pagos';
-import Reportes from './pages/Reportes';
+import { AuthProvider } from './context/AuthContext.jsx';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+import Layout from './components/Layout.jsx';
+import Login from './pages/Login.jsx';
+import Dashboard from './pages/Dashboard.jsx';
+import Socios from './pages/Socios.jsx';
+import Pagos from './pages/Pagos.jsx';
+import Reportes from './pages/Reportes.jsx';
 
 export default function App() {
   return (
