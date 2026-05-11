@@ -52,7 +52,17 @@ async function main() {
     const s = await prisma.socio.upsert({
       where: { rut: socio.rut },
       update: {},
-      create: socio,
+      create: {
+        nombre: socio.nombre,
+        apellido: socio.apellido,
+        rut: socio.rut,
+        telefono: socio.telefono,
+        series: {
+          create: [{
+            serie: { connect: { id: socio.serieId } }
+          }]
+        }
+      },
     });
 
     // Crear pagos de ejemplo para los últimos 3 meses
@@ -64,10 +74,11 @@ async function main() {
       const pagado = Math.random() > 0.3;
 
       await prisma.pago.upsert({
-        where: { socioId_mes_anio: { socioId: s.id, mes, anio } },
+        where: { socioId_serieId_mes_anio: { socioId: s.id, serieId: socio.serieId, mes, anio } },
         update: {},
         create: {
           socioId: s.id,
+          serieId: socio.serieId,
           mes,
           anio,
           monto: 15000,
