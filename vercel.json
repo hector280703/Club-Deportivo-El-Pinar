@@ -1,10 +1,5 @@
 {
   "version": 2,
   "buildCommand": "cd frontend && npm ci && npm run build",
-  "outputDirectory": "frontend/dist",
-  "installCommand": "npm ci --workspaces",
-  "framework": "vite",
-  "env": {
-    "NODE_ENV": "production"
-  }
+  "outputDirectory": "frontend/dist"
 }
