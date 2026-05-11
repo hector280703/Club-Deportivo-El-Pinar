@@ -1,14 +1,10 @@
 {
   "version": 2,
-  "experimentalServices": {
-    "frontend": {
-      "entrypoint": "frontend",
-      "routePrefix": "/",
-      "framework": "vite"
-    },
-    "backend": {
-      "entrypoint": "api/index.js",
-      "routePrefix": "/api"
-    }
+  "buildCommand": "cd frontend && npm ci && npm run build",
+  "outputDirectory": "frontend/dist",
+  "installCommand": "npm ci --workspaces",
+  "framework": "vite",
+  "env": {
+    "NODE_ENV": "production"
   }
 }
