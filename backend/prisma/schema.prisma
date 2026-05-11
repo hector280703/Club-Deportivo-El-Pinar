@@ -1,0 +1,65 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  email     String   @unique
+  password  String
+  rol       String   @default("admin")
+  createdAt DateTime @default(now())
+}
+
+model Serie {
+  id     Int          @id @default(autoincrement())
+  nombre String       @unique
+  socios SocioSerie[]
+  pagos  Pago[]
+}
+
+model SocioSerie {
+  socioId Int
+  serieId Int
+  socio   Socio @relation(fields: [socioId], references: [id])
+  serie   Serie @relation(fields: [serieId], references: [id])
+
+  @@id([socioId, serieId])
+}
+
+model Socio {
+  id        Int          @id @default(autoincrement())
+  nombre    String
+  apellido  String
+  rut       String       @unique
+  telefono  String?
+  email     String?
+  activo    Boolean      @default(true)
+  series    SocioSerie[]
+  pagos     Pago[]
+  createdAt DateTime     @default(now())
+}
+
+model Pago {
+  id        Int      @id @default(autoincrement())
+  socioId   Int
+  serieId   Int
+  socio     Socio    @relation(fields: [socioId], references: [id])
+  serie     Serie    @relation(fields: [serieId], references: [id])
+  mes       Int
+  anio      Int
+  monto     Float
+  estado    String   @default("pendiente")
+  fechaPago DateTime?
+  notas     String?
+  createdAt DateTime @default(now())
+
+  @@unique([socioId, serieId, mes, anio])
+}
