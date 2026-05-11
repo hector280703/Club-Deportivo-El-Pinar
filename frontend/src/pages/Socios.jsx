@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import API from '../api/axios.js';
+import API from '../api/axios';
 import toast from 'react-hot-toast';
 import { UserPlus, Search, Edit2, X, Trash2 } from 'lucide-react';
 
