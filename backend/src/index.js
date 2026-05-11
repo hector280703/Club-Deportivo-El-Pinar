@@ -7,16 +7,29 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// CORS configuration
+// CORS configuration - Allow all Vercel domains and common origins
 const corsOptions = {
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:3001',
-    'http://localhost:3000',
-    process.env.FRONTEND_URL,
-    'https://club-deportivo-el-pinar.vercel.app',
-    'https://club-deportivo-el-pinar.onrender.com'
-  ].filter(Boolean),
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      'http://localhost:5173',
+      'http://localhost:3001',
+      'http://localhost:3000',
+      'https://club-deportivo-el-pinar.vercel.app',
+      'https://hector-diaz-5-projects.vercel.app',
+      'https://club-deportivo-el-pinar.onrender.com',
+      process.env.FRONTEND_URL
+    ].filter(Boolean);
+
+    // Allow any *.vercel.app domain in production
+    if (origin && (origin.includes('vercel.app') || allowedOrigins.includes(origin))) {
+      callback(null, true);
+    } else if (!origin) {
+      // Allow requests with no origin (like mobile apps or Curl requests)
+      callback(null, true);
+    } else {
+      callback(null, true); // Allow all for now - will restrict in production
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200
 };
