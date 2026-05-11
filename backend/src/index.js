@@ -7,8 +7,22 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// CORS configuration
+const corsOptions = {
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:3001',
+    'http://localhost:3000',
+    process.env.FRONTEND_URL,
+    'https://club-deportivo-el-pinar.vercel.app',
+    'https://club-deportivo-el-pinar.onrender.com'
+  ].filter(Boolean),
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
 // Middleware
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Routes
