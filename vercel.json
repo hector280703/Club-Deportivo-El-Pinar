@@ -1,5 +1,10 @@
 {
   "version": 2,
   "buildCommand": "cd frontend && npm ci && npm run build",
-  "outputDirectory": "frontend/dist"
+  "outputDirectory": "frontend/dist",
+  "framework": "vite",
+  "env": {
+    "NODE_ENV": "production",
+    "VITE_API_URL": "https://club-deportivo-el-pinar.onrender.com/api"
+  }
 }
