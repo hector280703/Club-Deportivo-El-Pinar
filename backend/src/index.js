@@ -7,8 +7,17 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware - CORS completamente abierto para desarrollo
-app.use(cors());
+// Middleware - CORS dinámico para permitir localhost y Vercel
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || origin.startsWith('http://localhost') || origin.endsWith('.vercel.app') || origin === process.env.FRONTEND_URL) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed'));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json());
 
 // Routes

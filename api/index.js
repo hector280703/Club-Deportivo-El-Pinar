@@ -8,7 +8,13 @@ const app = express();
 
 // Middleware
 app.use(cors({ 
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173', 
+  origin: function (origin, callback) {
+    if (!origin || origin.startsWith('http://localhost') || origin.endsWith('.vercel.app') || origin === process.env.FRONTEND_URL) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed'));
+    }
+  },
   credentials: true 
 }));
 app.use(express.json());
