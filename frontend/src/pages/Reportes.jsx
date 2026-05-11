@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import API from '@/api/axios.js';
+import API from '../api/axios';
 import {
   PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer,
   BarChart, Bar, XAxis, YAxis, CartesianGrid,

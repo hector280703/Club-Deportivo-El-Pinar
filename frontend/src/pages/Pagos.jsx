@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import API from '@/api/axios.js';
+import API from '../api/axios';
 import toast from 'react-hot-toast';
 import { RefreshCw, X, Check, ChevronDown, Zap } from 'lucide-react';
 
