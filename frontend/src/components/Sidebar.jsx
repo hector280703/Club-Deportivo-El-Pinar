@@ -6,6 +6,7 @@ import {
   CreditCard,
   BarChart3,
   LogOut,
+  ChevronLeft,
 } from 'lucide-react';
 
 const navItems = [
@@ -15,7 +16,7 @@ const navItems = [
   { to: '/reportes', label: 'Reportes', icon: BarChart3 },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, onToggle }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -25,13 +26,19 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? 'open' : 'collapsed'}`}>
+      <button className="sidebar-toggle" onClick={onToggle} title={isOpen ? 'Contraer' : 'Expandir'}>
+        <ChevronLeft size={20} />
+      </button>
+
       <div className="sidebar-logo">
         <img src="/logo.png" alt="El Pinar" className="logo-img" />
-        <div>
-          <h1 className="logo-title">El Pinar</h1>
-          <p className="logo-subtitle">Club Deportivo</p>
-        </div>
+        {isOpen && (
+          <div>
+            <h1 className="logo-title">El Pinar</h1>
+            <p className="logo-subtitle">Club Deportivo</p>
+          </div>
+        )}
       </div>
 
       <nav className="sidebar-nav">
@@ -41,9 +48,10 @@ export default function Sidebar() {
             to={to}
             end={to === '/'}
             className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+            title={!isOpen ? label : ''}
           >
             <Icon size={20} />
-            <span>{label}</span>
+            {isOpen && <span>{label}</span>}
           </NavLink>
         ))}
       </nav>
@@ -51,14 +59,18 @@ export default function Sidebar() {
       <div className="sidebar-footer">
         <div className="user-info">
           <div className="user-avatar">{user?.nombre?.charAt(0)}</div>
-          <div>
-            <p className="user-name">{user?.nombre}</p>
-            <p className="user-role">Administrador</p>
-          </div>
+          {isOpen && (
+            <div>
+              <p className="user-name">{user?.nombre}</p>
+              <p className="user-role">Administrador</p>
+            </div>
+          )}
         </div>
-        <button className="logout-btn" onClick={handleLogout} title="Cerrar sesión">
-          <LogOut size={18} />
-        </button>
+        {isOpen && (
+          <button className="logout-btn" onClick={handleLogout} title="Cerrar sesión">
+            <LogOut size={18} />
+          </button>
+        )}
       </div>
     </aside>
   );

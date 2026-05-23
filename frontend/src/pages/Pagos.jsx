@@ -1,7 +1,8 @@
 import { useEffect, useState, useCallback } from 'react';
 import API from '../services/axios';
 import toast from 'react-hot-toast';
-import { RefreshCw, X, Check, ChevronDown, Zap } from 'lucide-react';
+import { RefreshCw, X, Check, ChevronDown, Zap, Download } from 'lucide-react';
+import * as XLSX from 'xlsx';
 
 const MESES = [
   '', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
@@ -162,6 +163,65 @@ export default function Pagos() {
   const recaudadoAnio = filtered.reduce((sum, s) =>
     sum + Object.values(s.pagos).filter(p => p.estado === 'pagado').reduce((a, p) => a + p.monto, 0), 0);
 
+  const exportarExcel = () => {
+    try {
+      const workbook = XLSX.utils.book_new();
+      const sheetData = [];
+
+      // Título y año
+      sheetData.push(['RESUMEN DE PAGOS', `Año: ${anio}`]);
+      sheetData.push([]);
+
+      // Por cada serie
+      Object.entries(grouped).forEach(([serieName, sociosList]) => {
+        sheetData.push([serieName.toUpperCase()]);
+        sheetData.push(['Apellido, Nombre', 'RUT', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic', 'Total Pagado']);
+
+        sociosList.forEach((socio) => {
+          const totalPagado = Object.values(socio.pagos)
+            .filter((p) => p.estado === 'pagado')
+            .reduce((a, p) => a + p.monto, 0);
+
+          const row = [
+            `${socio.apellido}, ${socio.nombre}`,
+            socio.rut,
+            ...Array.from({ length: 12 }, (_, i) => {
+              const pago = socio.pagos[i + 1];
+              if (!pago) return '-';
+              if (pago.estado === 'pagado') return pago.monto;
+              return pago.estado === 'vencido' ? 'V' : 'P';
+            }),
+            totalPagado,
+          ];
+          sheetData.push(row);
+        });
+
+        sheetData.push([]);
+      });
+
+      const worksheet = XLSX.utils.aoa_to_sheet(sheetData);
+
+      // Estilos básicos
+      worksheet['A1'].font = { bold: true, size: 14 };
+      worksheet['B1'].font = { bold: true, size: 14 };
+
+      // Ajustar ancho de columnas
+      worksheet['!cols'] = [
+        { wch: 25 }, // Nombre
+        { wch: 12 }, // RUT
+        ...Array(12).fill({ wch: 10 }), // Meses
+        { wch: 15 }, // Total
+      ];
+
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Pagos');
+      XLSX.writeFile(workbook, `Pagos_${anio}.xlsx`);
+      toast.success('Excel exportado ✅');
+    } catch (err) {
+      toast.error('Error al exportar a Excel');
+      console.error(err);
+    }
+  };
+
   return (
     <div className="page pagos-page">
       {/* Header */}
@@ -173,6 +233,9 @@ export default function Pagos() {
         <div className="header-actions">
           <button className="btn-secondary" onClick={() => setShowGenModal(true)}>
             <Zap size={16} /> Generar cuotas
+          </button>
+          <button className="btn-secondary" onClick={exportarExcel} title="Exportar a Excel">
+            <Download size={16} /> Exportar Excel
           </button>
           <button className="btn-secondary icon-btn" onClick={fetchData} title="Refrescar">
             <RefreshCw size={16} />
