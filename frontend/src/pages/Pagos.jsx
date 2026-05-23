@@ -18,7 +18,7 @@ function formatMoney(n) {
 }
 
 function MesCell({ pago, onClick }) {
-  if (!pago) {
+  if (!pago || pago.estado === 'sin registro') {
     return (
       <td className="mes-cell mes-empty" onClick={onClick} title="Sin registro — clic para registrar">
         <span className="mes-dash">—</span>
@@ -159,7 +159,10 @@ export default function Pagos() {
   const mesActual = new Date().getMonth() + 1;
   const totalSocios = filtered.length;
   const pagadosHoy = filtered.filter((s) => s.pagos[mesActual]?.estado === 'pagado').length;
-  const pendientesHoy = totalSocios - pagadosHoy;
+  const pendientesHoy = filtered.filter((s) => {
+    const pago = s.pagos[mesActual];
+    return pago && pago.estado !== 'pagado' && pago.estado !== 'sin registro';
+  }).length;
   const recaudadoAnio = filtered.reduce((sum, s) =>
     sum + Object.values(s.pagos).filter(p => p.estado === 'pagado').reduce((a, p) => a + p.monto, 0), 0);
 
@@ -187,7 +190,7 @@ export default function Pagos() {
             socio.rut,
             ...Array.from({ length: 12 }, (_, i) => {
               const pago = socio.pagos[i + 1];
-              if (!pago) return '-';
+              if (!pago || pago.estado === 'sin registro') return '-';
               if (pago.estado === 'pagado') return pago.monto;
               return pago.estado === 'vencido' ? 'V' : 'P';
             }),
@@ -400,6 +403,7 @@ export default function Pagos() {
                     <option value="pagado">Pagado</option>
                     <option value="pendiente">Pendiente</option>
                     <option value="vencido">Vencido</option>
+                    <option value="sin registro">Sin registro</option>
                   </select>
                 </div>
               </div>
