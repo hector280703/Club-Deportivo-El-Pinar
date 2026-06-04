@@ -16,16 +16,7 @@ export default function Layout({ children }) {
 
   return (
     <div className="app-layout">
-      {/* Mobile menu toggle */}
-      <button
-        className="sidebar-mobile-toggle"
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        title={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
-      >
-        {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
-
-      {/* Overlay for mobile menu */}
+      {/* Overlay for mobile menu - behind button */}
       {mobileMenuOpen && (
         <div
           className="mobile-menu-overlay"
@@ -39,7 +30,16 @@ export default function Layout({ children }) {
         />
       )}
 
-      <div className={`sidebar ${mobileMenuOpen ? 'open' : ''}`}>
+      {/* Mobile menu toggle - on top */}
+      <button
+        className="sidebar-mobile-toggle"
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        title={mobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'}
+      >
+        {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      <div className={`sidebar ${mobileMenuOpen ? 'open' : ''} ${!sidebarOpen ? 'collapsed' : ''}`}>
         <Sidebar isOpen={sidebarOpen} onToggle={toggleSidebar} />
       </div>
 
