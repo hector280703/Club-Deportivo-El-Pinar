@@ -170,7 +170,7 @@ export default function Socios() {
               <div className="form-row">
                 <div className="form-group">
                   <label>RUT *</label>
-                  <input required value={form.rut} onChange={(e) => setForm({ ...form, rut: e.target.value })} placeholder="21.353.846-2" />
+                  <input required value={form.rut} onChange={(e) => setForm({ ...form, rut: e.target.value })} placeholder="12.345.678-9" />
                 </div>
                 <div className="form-group">
                   <label>Teléfono</label>

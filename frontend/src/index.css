@@ -147,12 +147,28 @@ a {
   flex-direction: column;
   padding: 1.5rem 1rem;
   flex-shrink: 0;
-  transition: width var(--transition);
+  transition: all var(--transition);
   position: relative;
 }
 
 .sidebar.collapsed {
   width: 80px;
+}
+
+/* Mobile menu styles */
+.sidebar-mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  padding: 0.5rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  z-index: 1001;
+}
+
+.sidebar-mobile-toggle:hover {
+  color: var(--accent-light);
 }
 
 .sidebar-toggle {
@@ -1701,4 +1717,692 @@ select option {
   padding: 0.9rem 1.5rem;
   background: rgba(22, 163, 74, 0.06);
   border-bottom: 1px solid rgba(22, 163, 74, 0.1);
+}
+
+/* ─────────────────────────────────────────────── */
+/* ─── RESPONSIVE DESIGN - MOBILE FIRST ─── */
+/* ─────────────────────────────────────────────── */
+
+/* Tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-w: 240px;
+  }
+
+  .sidebar-toggle {
+    display: none;
+  }
+
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .main-content {
+    padding: 1.5rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reports-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .socios-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+
+  .modal {
+    max-width: 90vw;
+  }
+}
+
+/* Small tablets and large phones (600px - 768px) */
+@media (max-width: 768px) {
+  :root {
+    --sidebar-w: 100%;
+  }
+
+  .app-layout {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(22, 163, 74, 0.15);
+    padding: 1rem;
+    max-height: 70vh;
+    overflow-y: auto;
+    position: relative;
+    z-index: 999;
+    display: none;
+  }
+
+  .sidebar.open {
+    display: flex;
+  }
+
+  .main-content {
+    flex: 1;
+    padding: 1rem;
+    min-height: calc(100vh - 56px);
+  }
+
+  .main-content::before {
+    width: 400px;
+    height: 400px;
+    top: 40%;
+  }
+
+  .sidebar-toggle {
+    display: none !important;
+  }
+
+  .sidebar-mobile-toggle {
+    display: flex;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1002;
+    background: var(--bg-card);
+    border: 1px solid rgba(22, 163, 74, 0.2);
+    border-radius: var(--radius-sm);
+  }
+
+  .page-title {
+    font-size: 1.3rem;
+  }
+
+  .page-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .kpi-card {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .kpi-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .kpi-value {
+    font-size: 1.4rem;
+  }
+
+  .kpi-label {
+    font-size: 0.7rem;
+  }
+
+  .header-actions {
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-ghost {
+    padding: 0.7rem 1rem;
+    font-size: 0.85rem;
+    flex: 1;
+    min-width: 100px;
+  }
+
+  .btn-primary.btn-full {
+    width: 100%;
+  }
+
+  .page {
+    max-width: 100%;
+  }
+
+  .filters-bar {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .filter-group select,
+  .filter-group input {
+    min-width: 100%;
+  }
+
+  .search-box {
+    min-width: 100%;
+  }
+
+  .socios-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .socio-card {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .socio-card-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 0.85rem;
+  }
+
+  .socio-card-info h4 {
+    font-size: 0.9rem;
+  }
+
+  .action-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Responsive Table */
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  .data-table {
+    font-size: 0.8rem;
+  }
+
+  .data-table th {
+    padding: 0.6rem 0.5rem;
+    font-size: 0.65rem;
+  }
+
+  .data-table td {
+    padding: 0.7rem 0.5rem;
+  }
+
+  /* Matrix table - smaller text for mobile */
+  .matriz-table {
+    font-size: 0.7rem;
+  }
+
+  .matriz-table thead th {
+    padding: 0.5rem 0.3rem;
+    font-size: 0.6rem;
+  }
+
+  .col-nombre {
+    min-width: 150px;
+  }
+
+  .col-mes {
+    width: 60px;
+  }
+
+  .mes-cell {
+    height: 40px;
+  }
+
+  .modal {
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal-header {
+    padding: 1rem 1rem;
+  }
+
+  .modal-form {
+    padding: 1rem;
+  }
+
+  .modal-overlay {
+    padding: 0.5rem;
+  }
+
+  .serie-pill {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+  }
+
+  .pagos-kpis {
+    gap: 0.5rem;
+  }
+
+  .pagos-kpi {
+    min-width: 140px;
+    padding: 0.75rem 1rem;
+  }
+
+  .pkpi-label {
+    font-size: 0.65rem;
+  }
+
+  .pkpi-value {
+    font-size: 1.4rem;
+  }
+
+  .legend-item {
+    font-size: 0.7rem;
+  }
+
+  .legend-dot {
+    width: 18px;
+    height: 18px;
+    font-size: 0.6rem;
+  }
+}
+
+/* Phones (< 600px) */
+@media (max-width: 600px) {
+  :root {
+    --sidebar-w: 100%;
+    --radius: 8px;
+    --radius-sm: 6px;
+  }
+
+  html,
+  body {
+    font-size: 14px;
+  }
+
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    max-height: none;
+    width: 100%;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    border: none;
+    display: none;
+    flex-direction: column;
+  }
+
+  .sidebar.open {
+    display: flex;
+  }
+
+  .sidebar-logo {
+    margin-bottom: 1rem;
+  }
+
+  .logo-title {
+    font-size: 1rem;
+  }
+
+  .main-content {
+    padding: 0.75rem;
+    min-height: calc(100vh - 56px);
+  }
+
+  .main-content::before {
+    width: 250px;
+    height: 250px;
+    opacity: 0.05;
+  }
+
+  .page {
+    max-width: 100%;
+  }
+
+  .page-header {
+    margin-bottom: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.1rem;
+  }
+
+  .page-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .kpi-card {
+    padding: 0.75rem;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .kpi-card:hover {
+    transform: none;
+  }
+
+  .kpi-icon {
+    width: 36px;
+    height: 36px;
+    margin: 0 auto;
+  }
+
+  .kpi-value {
+    font-size: 1.2rem;
+    margin-top: 0;
+  }
+
+  .kpi-label {
+    font-size: 0.65rem;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-ghost {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.8rem;
+    justify-content: center;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .series-section,
+  .chart-section {
+    padding: 1rem;
+  }
+
+  .section-title {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .serie-card {
+    margin-bottom: 0.5rem;
+  }
+
+  .serie-name {
+    font-size: 0.85rem;
+  }
+
+  .filters-bar {
+    flex-direction: column;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .filter-group select,
+  .filter-group input {
+    min-width: 100%;
+  }
+
+  .search-box {
+    min-width: 100%;
+  }
+
+  /* Responsive Table - Stack on mobile */
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .data-table {
+    font-size: 0.75rem;
+    min-width: 600px;
+  }
+
+  .data-table th,
+  .data-table td {
+    padding: 0.5rem;
+  }
+
+  .socios-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .socio-card {
+    padding: 0.75rem;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .socio-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .socio-card-avatar {
+    margin: 0 auto;
+  }
+
+  .socio-card-actions {
+    width: 100%;
+    flex-direction: row;
+    gap: 0.25rem;
+  }
+
+  .action-btn {
+    width: 32px;
+    height: 32px;
+    flex: 1;
+  }
+
+  .modal {
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: var(--radius);
+  }
+
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal {
+    border-radius: var(--radius) var(--radius) 0 0;
+    animation: slideUpMobile 0.2s ease;
+  }
+
+  @keyframes slideUpMobile {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .modal-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .modal-header h3 {
+    font-size: 0.95rem;
+  }
+
+  .modal-form {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group {
+    width: 100%;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+    padding: 0.6rem 0.65rem;
+  }
+
+  .form-group label {
+    font-size: 0.75rem;
+  }
+
+  .serie-checkboxes {
+    flex-direction: column;
+  }
+
+  .serie-checkbox {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .pagos-kpis {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .pagos-kpi {
+    min-width: 100%;
+    padding: 0.75rem 1rem;
+  }
+
+  .pkpi-label {
+    font-size: 0.6rem;
+  }
+
+  .pkpi-value {
+    font-size: 1.2rem;
+  }
+
+  .pkpi-value-sm {
+    font-size: 1rem;
+  }
+
+  /* Matrix table mobile */
+  .matriz-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .matriz-table {
+    font-size: 0.65rem;
+    min-width: 800px;
+  }
+
+  .matriz-table thead th {
+    padding: 0.4rem 0.2rem;
+    font-size: 0.55rem;
+  }
+
+  .col-nombre {
+    min-width: 120px;
+  }
+
+  .col-serie {
+    min-width: 80px;
+  }
+
+  .col-mes {
+    width: 50px;
+  }
+
+  .mes-cell {
+    height: 36px;
+    font-size: 0.6rem;
+  }
+
+  .col-nombre-cell {
+    padding: 0.4rem 0.5rem;
+  }
+
+  .legend-item {
+    font-size: 0.65rem;
+    gap: 0.3rem;
+  }
+
+  .legend-dot {
+    width: 16px;
+    height: 16px;
+    font-size: 0.5rem;
+  }
+
+  .legend-hint {
+    font-size: 0.6rem;
+  }
+
+  .series-section,
+  .chart-section {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .serie-card-content {
+    padding: 0.7rem 0.75rem;
+  }
+
+  .serie-stats {
+    gap: 0.5rem;
+  }
+
+  .serie-stat {
+    font-size: 0.75rem;
+  }
+
+  .chart-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Extra small phones (< 400px) */
+@media (max-width: 400px) {
+  .sidebar-logo {
+    margin-bottom: 0.75rem;
+  }
+
+  .logo-title {
+    font-size: 0.9rem;
+  }
+
+  .page-title {
+    font-size: 1rem;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kpi-card {
+    padding: 0.6rem;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-ghost {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.75rem;
+  }
+
+  .modal {
+    border-radius: 0;
+  }
+
+  .pkpi-value {
+    font-size: 1rem;
+  }
 }
