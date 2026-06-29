@@ -63,3 +63,14 @@ model Pago {
 
   @@unique([socioId, serieId, mes, anio])
 }
+
+model Transaccion {
+  id          Int      @id @default(autoincrement())
+  tipo        String   // "ingreso" | "egreso"
+  categoria   String   // "Cuotas", "Donacion", "Eventos", "Mantenimiento", "Salarios", "Arbitros", "Equipamiento", "Otro"
+  descripcion String
+  monto       Float
+  fecha       DateTime
+  notas       String?
+  creadoEn   DateTime @default(now())
+}

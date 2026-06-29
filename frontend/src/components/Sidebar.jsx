@@ -7,12 +7,14 @@ import {
   BarChart3,
   LogOut,
   ChevronLeft,
+  TrendingUp,
 } from 'lucide-react';
 
 const navItems = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/socios', label: 'Socios', icon: Users },
   { to: '/pagos', label: 'Pagos', icon: CreditCard },
+  { to: '/finanzas', label: 'Finanzas', icon: TrendingUp },
   { to: '/reportes', label: 'Reportes', icon: BarChart3 },
 ];
 

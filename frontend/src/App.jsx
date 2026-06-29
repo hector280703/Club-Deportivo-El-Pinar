@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import Socios from './pages/Socios';
 import Pagos from './pages/Pagos';
 import Reportes from './pages/Reportes';
+import Finanzas from './pages/Finanzas';
 
 export default function App() {
   return (
@@ -55,6 +56,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <Layout><Reportes /></Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/finanzas"
+            element={
+              <ProtectedRoute>
+                <Layout><Finanzas /></Layout>
               </ProtectedRoute>
             }
           />

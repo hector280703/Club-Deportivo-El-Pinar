@@ -26,6 +26,7 @@ app.use('/api/series', require('./routes/series'));
 app.use('/api/socios', require('./routes/socios'));
 app.use('/api/pagos', require('./routes/pagos'));
 app.use('/api/dashboard', require('./routes/dashboard'));
+app.use('/api/finanzas', require('./routes/finanzas'));
 
 // Health check
 app.get('/api/health', (req, res) => {
